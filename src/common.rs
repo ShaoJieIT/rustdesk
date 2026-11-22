@@ -1294,6 +1294,13 @@ pub fn get_api_server(api: String, custom: String) -> String {
 }
 
 fn get_api_server_(api: String, custom: String) -> String {
+    // ===== 年轮定制：无条件返回自建 API 服务器 =====
+    // 官方逻辑会在内置自定义 ID 服务器时，从 ID 服务器推导 API 地址
+    // （return format!("http://{}", s) -> http://xxx:21114），导致本函数的
+    // 默认值永远执行不到。定制客户端必须无条件固定 API server。
+    let _ = (api, custom); // 忽略运行时传入值，防止被 UI/配置覆盖
+    return "https://rs.nianlunjia.top".to_owned();
+    // ===== 年轮定制结束 =====
     #[cfg(windows)]
     if let Ok(lic) = crate::platform::windows::get_license_from_exe_name() {
         if !lic.api.is_empty() {
