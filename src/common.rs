@@ -3292,9 +3292,10 @@ mod tests {
 
     #[test]
     fn test_api_server_from_bare_ipv6_rendezvous_server() {
+        // 年轮定制：API server 无条件固定，不再从 ID 服务器推导
         assert_eq!(
             get_api_server_("".to_owned(), "2001:db8::1".to_owned()),
-            "http://[2001:db8::1]:21114"
+            "https://rs.nianlunjia.top"
         );
     }
 
